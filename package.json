@@ -1,6 +1,6 @@
 {
   "name": "mysqldb-handler",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "node.js mysql db handler using async/await",
   "repository": {
     "type": "git",
