@@ -2,7 +2,7 @@
 
 node.js mysql db handler using async/await
 
-node version > 7.0
+node version > 7.6
 
 To install mysqldb-handler, use npm:
 
