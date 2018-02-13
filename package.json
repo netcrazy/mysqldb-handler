@@ -1,0 +1,18 @@
+{
+  "name": "mysqldb-handler",
+  "version": "1.0.2",
+  "description": "node.js mysql db handler using async/await",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:netcrazy/mysqldb-handler.git"
+  },
+  "main": "./lib/mysqldb-handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "netcrazy",
+  "license": "ISC",
+  "dependencies": {
+    "promise-mysql": "^3.2.0"
+  }
+}
