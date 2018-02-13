@@ -1,5 +1,7 @@
-const MySQLHandler = require('../lib/mysqldb-handler');
-const mysql = new MySQLHandler({
+"use strict";
+
+const MySQLDBHandler = require('../lib/mysqldb-handler');
+const mysql = new MySQLDBHandler({
     connectionLimit: 100,
     waitForConnections: false,
     multipleStatements: true,
@@ -11,11 +13,12 @@ const mysql = new MySQLHandler({
 });
 
 (async() => {
+
     /**
      * Single Query 1st
-     * @type {T}
+     * @type {*}
      */
-    const res1 = await mysql.connect(async(conn) => {
+    let res1 = await mysql.connect(async(conn) => {
         return await conn.query('select * from TEST where SEQ=?', [44]);
     });
     console.log(res1);
@@ -24,14 +27,14 @@ const mysql = new MySQLHandler({
      * Single Query 2nd
      * @type {*|Promise<*>}
      */
-    const res2 = await mysql.connect(conn => conn.query('select * from TEST where SEQ=?', [44]));
+    let res2 = await mysql.connect(conn => conn.query('select * from TEST where SEQ=?', [44]));
     console.log(res2);
 
     /**
      * Transaction Query example
      * @type {T}
      */
-    const res3 = await mysql.transaction(async (conn) => {
+    let res3 = await mysql.transaction(async (conn) => {
         await conn.query('insert into TEST (NAME) VALUES (?)', ['Hello']);
         await conn.query('update TEST set NAME = "World" where NAME = ?', ['Hello']);
         return 'OK';
