@@ -55,6 +55,11 @@ const mysql = new MySQLHandler({
         return 'OK';
     });
     console.log(res3);
+    
+    /**
+     * Pool end
+     */
+    await mysql.end();
 
 })().catch(err => {
     console.error(err);
