@@ -41,6 +41,11 @@ const mysql = new MySQLDBHandler({
     });
     console.log(res3);
 
+    /**
+     * Pool end
+     */
+    await mysql.end();
+
 })().catch(err => {
     console.error(err);
 });
