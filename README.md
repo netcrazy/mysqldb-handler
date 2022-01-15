@@ -10,14 +10,11 @@ To install mysqldb-handler, use npm:
 npm install mysqldb-handler --save
 ```
 
-
 **_example_**
-
 <pre>
 <code>
-
-const MySQLHandler = require('mysqldb-handler');
-const mysql = new MySQLHandler({
+const MySQLDBHandler = require('mysqldb-handler');
+const mysql = new MySQLDBHandler({
     connectionLimit: 100,
     waitForConnections: false,
     multipleStatements: true,
@@ -28,13 +25,16 @@ const mysql = new MySQLHandler({
     database: '{DATABASE}'
 });
 
-(async() => {
+(async () => {
+
     /**
      * Single Query 1st
-     * @type {T}
+     * @type {*}
      */
-    const res1 = await mysql.connect(async(conn) => {
-        return await conn.query('select * from TEST where SEQ=?', [44]);
+    let res1 = await mysql.connect(conn => {
+        return conn.query(`select *
+                           from TEST
+                           where NAME = ?`, ['World']);
     });
     console.log(res1);
 
@@ -42,29 +42,34 @@ const mysql = new MySQLHandler({
      * Single Query 2nd
      * @type {*|Promise<*>}
      */
-    const res2 = await mysql.connect(conn => conn.query('select * from TEST where SEQ=?', [44]));
+    let res2 = await mysql.connect(conn => conn.query(`select *
+                                                       from TEST
+                                                       where NAME = ?`, ['World']));
     console.log(res2);
 
     /**
      * Transaction Query example
      * @type {T}
      */
-    const res3 = await mysql.transaction(async (conn) => {
-        await conn.query('insert into TEST (NAME) VALUES (?)', ['Hello']);
-        await conn.query('update TEST set NAME = "World" where NAME = ?', ['Hello']);
+    let res3 = await mysql.transaction(async (conn) => {
+        await conn.query(`delete
+                          from TEST`);
+        await conn.query(`insert into TEST (NAME)
+                          VALUES (?)`, ['Hello']);
+        await conn.query(`update TEST
+                          set NAME = 'World'
+                          where NAME = ?`, ['Hello']);
         return 'OK';
     });
     console.log(res3);
-    
-    /**
-     * Pool end
-     */
-    await mysql.end();
 
 })().catch(err => {
     console.error(err);
+}).finally(() => {
+    /**
+     * Pool end
+     */
+    mysql.end();
 });
-
-
 </code>
 </pre>
